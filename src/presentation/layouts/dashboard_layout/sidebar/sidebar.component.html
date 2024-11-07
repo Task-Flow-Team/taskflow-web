@@ -1,0 +1,57 @@
+<div
+  class="sidebar bg-transparent shadow-lg flex flex-col h-screen"
+  [class.collapsed]="collapsed"
+>
+  <!-- Brand -->
+  <div class="flex items-center justify-center h-16 border-b">
+    <img src="assets/images/logo_vector.png" alt="Brand Logo" class="h-10" />
+  </div>
+
+  <!-- Menu Items -->
+  <nav class="flex-1 overflow-y-auto">
+    <ul class="py-4 space-y-1">
+      <li>
+        <a
+          [routerLink]="['/dashboard']"
+          routerLinkActive="bg-gray-50 text-primary border-r-4 border-primary"
+          class="flex items-center px-4 py-3 text-muted hover:bg-gray-50 transition-colors group"
+        >
+          <span class="truncate">Test</span>
+        </a>
+      </li>
+      <li *ngFor="let item of menuItems">
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="bg-gray-50 text-primary border-r-4 border-primary"
+          class="flex items-center px-4 py-3 text-muted hover:bg-gray-50 transition-colors group"
+        >
+          <mat-icon
+            class="mr-3 text-muted group-hover:text-primary transition-colors"
+            [class.text-primary]="item.route === currentRoute"
+          >
+            {{ item.icon }}
+          </mat-icon>
+          <span
+            class="text-sm font-medium group-hover:text-primary transition-colors"
+          >
+            {{ item.name }}
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Bottom Section -->
+  <div class="mt-auto">
+    <!-- Divider -->
+    <div class="border-t border-gray-100"></div>
+
+    <!-- App Version -->
+    <div class="p-4 flex items-center justify-between text-muted">
+      <p class="text-xs">App Version 1.0.0</p>
+      <a href="#" class="text-xs hover:text-primary transition-colors">
+        Changelog
+      </a>
+    </div>
+  </div>
+</div>

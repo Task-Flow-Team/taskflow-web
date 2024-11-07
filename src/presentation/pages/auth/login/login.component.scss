@@ -1,0 +1,74 @@
+// Variables
+$padding: 4rem;
+
+// Estilos base que complementan a Tailwind
+.login-container {
+  position: absolute;
+  inset: $padding;
+  box-sizing: border-box;
+
+  animation: scaleIn 0.6s ease-out;
+  transform-origin: center;
+}
+
+// Gradiente personalizado para la sección de publicidad
+.advertising-section {
+  background: rgb(58,58,64);
+  background: radial-gradient(circle, rgba(58,58,64,1) 0%, rgba(2,0,36,1) 100%);
+}
+
+// Media queries para ajustes específicos
+@media screen and (max-width: 768px) {
+  .login-container {
+    inset: 1rem; // Reducir el padding en móviles
+  }
+}
+
+// Estilos para elementos que requieren más personalización que Tailwind
+.floating-label {
+  @apply relative;
+
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label {
+    @apply transform -translate-y-6 scale-75;
+  }
+}
+
+// Asegúrate de que los elementos mantengan su posición durante la animación
+.login-container > div {
+  will-change: transform;
+  transform-origin: center;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 999;
+}
+
+// Estilos para sobreescribir comportamientos específicos de formularios
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: theme('colors.gray.800');
+  -webkit-box-shadow: 0 0 0px 1000px theme('colors.white') inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+// Utilidades adicionales para casos específicos
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

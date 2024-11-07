@@ -1,0 +1,22 @@
+<nav class="navbar flex items-center justify-between h-16 px-4 w-full">
+  <!-- Left side -->
+  <div class="flex items-center">
+    <button
+      (click)="toggleSidebar()"
+      class="text-muted hover:text-muted outline-none"
+    >
+      <mat-icon>sort</mat-icon>
+    </button>
+    <app-search-bar></app-search-bar>
+  </div>
+
+  <!-- Right side -->
+  <div class="flex items-center gap-2">
+    <app-language-selector></app-language-selector>
+    <app-theme-toggle></app-theme-toggle>
+    <app-notifications-toggle></app-notifications-toggle>
+    <app-user-menu
+     [user]="user"
+     (openModal)="handleModalOpen($event)"></app-user-menu>
+  </div>
+</nav>

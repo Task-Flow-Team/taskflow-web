@@ -1,0 +1,88 @@
+.register-container {
+  position: absolute;
+  inset: 4rem;
+  box-sizing: border-box;
+
+  animation: scaleIn 0.6s ease-out;
+  transform-origin: center;
+}
+
+// View Transitions
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  display: block;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 999;
+}
+
+// Define nombres personalizados para las transiciones
+.register-form {
+  view-transition-name: register-form;
+}
+
+.advertising-section {
+  view-transition-name: advertising-section;
+  background: rgb(58,58,64);
+  background: radial-gradient(circle, rgba(58,58,64,1) 0%, rgba(2,0,36,1) 100%);
+}
+
+.step-content {
+  opacity: 0;
+  animation: stepPulse 0.2s ease-out forwards; // Nueva animación más rápida
+}
+
+.step-content.fade-out {
+  animation: fadeOut 0.15s ease-out forwards;
+}
+
+@keyframes stepPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.content-wrapper > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: elementSlideIn 0.1s ease-out forwards;
+}
+
+@for $i from 1 through 10 {
+  .content-wrapper > *:nth-child(#{$i}) {
+    animation-delay: #{0.6 + ($i * 0.1)}s;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .register-container {
+    inset: 1rem;
+  }
+}
