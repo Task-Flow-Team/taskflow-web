@@ -198,3 +198,42 @@ body {
     animation: slideOutRight 0.4s ease-out forwards;
   }
 }
+
+.colored-icon {
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+  ::ng-deep svg {
+    stroke-width: 0.7 !important; // Aplicar un stroke-width uniforme
+    transition: all 0.3s ease;
+  }
+
+  // Estado por defecto
+  &.default {
+    ::ng-deep svg {
+      fill: var(--icon-fill, currentColor);
+      stroke: var(--icon-stroke, currentColor);
+    }
+  }
+
+  // Estado hover
+  &:hover {
+    ::ng-deep svg {
+      fill: var(--icon-fill-hover, var(--icon-fill, currentColor));
+      stroke: var(--icon-stroke-hover, var(--icon-stroke, currentColor));
+    }
+  }
+
+  // Estado activo (cuando el ícono corresponde a la ruta actual)
+  &.active {
+    ::ng-deep svg {
+      fill: var(--icon-fill-active, var(--icon-fill-hover, var(--icon-fill, currentColor)));
+      stroke: var(--icon-stroke-active, var(--icon-stroke-hover, var(--icon-stroke, currentColor)));
+    }
+  }
+
+  /*   &.hero-icon {
+    ::ng-deep svg {
+      fill: none !important; // Aseguramos que el fill sea 'none' por defecto
+    }
+  } */
+}

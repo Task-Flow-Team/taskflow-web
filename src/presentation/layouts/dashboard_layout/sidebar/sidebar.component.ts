@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { getIconColors } from '@/src/shared/utils';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -12,47 +14,74 @@ export class SidebarComponent implements OnInit {
   currentRoute: string = '';
 
   menuItems = [
-    { 
+    {
       name: 'Home',
-      icon: 'home',
-      route: '/dashboard/home'
+      icon: 'bootstrapHouse',
+      route: '/dashboard/home',
+      colors: {
+        stroke: 'indigo',
+        fill: 'indigo',
+      },
     },
-    { 
-      name: 'News',
-      icon: 'newspaper',
-      route: '/dashboard/news'
-    },
-    { 
-      name: 'Kanban',
-      icon: 'view_column',
-      route: '/dashboard/kanban'
-    },
-    { 
+    {
       name: 'Workspaces',
-      icon: 'business_center',
-      route: '/dashboard/workspaces'
+      icon: 'bootstrapCollection',
+      route: '/dashboard/workspaces',
+      colors: {
+        stroke: 'purple',
+        fill: 'purple',
+      },
     },
-    { 
+    {
+      name: 'Tasks',
+      icon: 'heroClipboardDocumentCheck',
+      route: '/dashboard/tasks',
+      colors: {
+        stroke: 'green',
+        fill: 'green', // Para HeroIcons usamos 'none' para fill
+      },
+    },
+    {
+      name: 'News',
+      icon: 'heroMegaphone',
+      route: '/dashboard/news',
+      colors: {
+        stroke: 'yellow',
+        fill: 'yellow', // HeroIcon
+      },
+    },
+    {
       name: 'Calendar',
-      icon: 'calendar_today',
-      route: '/dashboard/calendar'
+      icon: 'bootstrapCalendar4Week',
+      route: '/dashboard/calendar',
+      colors: {
+        stroke: 'teal',
+        fill: 'teal',
+      },
     },
-    { 
+    {
       name: 'Analytics',
-      icon: 'bar_chart',
-      route: '/dashboard/analytics'
+      icon: 'bootstrapBarChartLine',
+      route: '/dashboard/analytics',
+      colors: {
+        stroke: 'violet',
+        fill: 'violet',
+      },
     },
   ];
 
   constructor(private router: Router) {
-    router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.currentRoute = event.url;
-    });
+    router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute = event.url;
+      });
   }
 
   ngOnInit() {
     this.currentRoute = this.router.url;
   }
+
+  public getIconColors = getIconColors;
+
 }

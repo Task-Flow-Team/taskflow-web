@@ -1,4 +1,3 @@
-import { MatIconModule } from '@angular/material/icon';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AlertsComponent } from '@/src/shared/components/ui/alert/alert.component';
@@ -8,7 +7,6 @@ import { AlertsComponent } from '@/src/shared/components/ui/alert/alert.componen
   standalone: true,
   imports: [
     RouterOutlet,
-    MatIconModule, 
     AlertsComponent
   ],
   template: `

@@ -10,27 +10,28 @@
   <!-- Menu Items -->
   <nav class="flex-1 overflow-y-auto">
     <ul class="py-4 space-y-1">
-      <li>
-        <a
-          [routerLink]="['/dashboard']"
-          routerLinkActive="bg-gray-50 text-primary border-r-4 border-primary"
-          class="flex items-center px-4 py-3 text-muted hover:bg-gray-50 transition-colors group"
-        >
-          <span class="truncate">Test</span>
-        </a>
-      </li>
       <li *ngFor="let item of menuItems">
         <a
           [routerLink]="item.route"
           routerLinkActive="bg-gray-50 text-primary border-r-4 border-primary"
           class="flex items-center px-4 py-3 text-muted hover:bg-gray-50 transition-colors group"
+          [class.active]="item.route === currentRoute"
         >
-          <mat-icon
-            class="mr-3 text-muted group-hover:text-primary transition-colors"
-            [class.text-primary]="item.route === currentRoute"
-          >
-            {{ item.icon }}
-          </mat-icon>
+          <ng-icon
+            [name]="item.icon"
+            class="mr-3 colored-icon"
+            [ngClass]="{
+              default: true,
+              active: item.route === currentRoute,
+              'hero-icon': item.icon.startsWith('hero')
+            }"
+            [style.--icon-fill]="getIconColors(item.colors).fill"
+            [style.--icon-stroke]="getIconColors(item.colors).stroke"
+            [style.--icon-fill-hover]="getIconColors(item.colors).fillHover"
+            [style.--icon-stroke-hover]="getIconColors(item.colors).strokeHover"
+            [style.--icon-fill-active]="getIconColors(item.colors).fillActive"
+            [style.--icon-stroke-active]="getIconColors(item.colors).strokeActive"
+          ></ng-icon>
           <span
             class="text-sm font-medium group-hover:text-primary transition-colors"
           >
