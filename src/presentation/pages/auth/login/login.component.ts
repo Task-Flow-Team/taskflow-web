@@ -2,6 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import {LoginService} from "@/src/presentation/pages/auth/login/login.service";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +20,10 @@ export class LoginComponent implements OnInit {
   // Define the show password state
   showPassword = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+  ) {
 
     // Define the login form group with email and password fields
     this.loginForm = this.fb.group({
@@ -47,36 +52,35 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       const { email, password, rememberMe } = this.loginForm.value;
 
-      // Aquí irían tus servicios de autenticación
-      try {
-        // Ejemplo de llamada a servicio de autenticación
-        // await this.authService.login(email, password);
+      // Llamamos a nuestro servicio de autenticación
+      this.loginService.login(email, password).subscribe({
+        next: (response) => {
 
-        if (rememberMe) {
-          this.saveCredentials(email);
-        }
+          const { access_token } = response;
 
-        // Mostrar mensaje de éxito
-        /*this.messageService.add({
-          severity: 'success',
-          summary: 'Inicio de sesión exitoso',
-          detail: 'Bienvenido al sistema'
-        });*/
+          // Si el usuario seleccionó "Recordarme", guardamos el email
+          if (rememberMe) {
+            this.saveCredentials(email);
+          }
 
-        // Redireccionar al dashboard o página principal
-        this.router.navigate(['/dashboard']);
-      } catch (error) {
-        // Manejo de errores
-        /*this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Credenciales incorrectas'
-        });*/
-      } finally {
-        this.loading = false;
-      }
+          localStorage.setItem('access_token', access_token);
+
+          this.router.navigate(['/dashboard']);
+          this.loading = false;
+        },
+        error: (error) => {
+          // Manejo de error (credenciales inválidas, servidor caído, etc.)
+          console.error('Error en login:', error);
+          /*this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Credenciales incorrectas'
+          });*/
+          this.loading = false;
+        },
+      });
     } else {
-      // Mark all fields as touched to show errors
+      // Si el formulario es inválido, marcamos todos los campos como "touched"
       Object.keys(this.loginForm.controls).forEach((key) => {
         const control = this.loginForm.get(key);
         if (control) {
@@ -141,17 +145,17 @@ export class LoginComponent implements OnInit {
       await this.router.navigateByUrl('/auth/register');
       return;
     }
-  
+
     // Add the slide-out class to the login container
     const container = document.querySelector('.login-container');
     container?.classList.add('slide-out');
-  
+
     // Wait for 400 milliseconds before calling startViewTransition
     await new Promise((resolve) => setTimeout(resolve, 400));
-  
+
     // Call startViewTransition directly on the document
     (document as any).startViewTransition(() => this.router.navigateByUrl('/auth/register'));
-  
+
     // Remove the slide-out class after 400 milliseconds
     setTimeout(() => {
       container?.classList.remove('slide-out');

@@ -8,6 +8,9 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SocialButtonsComponent } from '@/src/shared/components/ui';
 import { DividerComponent } from "@/src/shared/components/layout/";
 import { RememberCheckboxComponent } from "@/src/shared/components/form";
+import {HttpClientModule} from "@angular/common/http";
+import {LoginService} from "@/src/presentation/pages/auth/login/login.service";
+import {RegisterService} from "@/src/presentation/pages/auth/register/register.service";
 
 
 @NgModule({
@@ -16,13 +19,18 @@ import { RememberCheckboxComponent } from "@/src/shared/components/form";
     LoginComponent,
     RegisterComponent,
   ],
+  providers: [
+    LoginService,
+    RegisterService
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
     SocialButtonsComponent,
     DividerComponent,
-    RememberCheckboxComponent
+    RememberCheckboxComponent,
+    HttpClientModule
   ],
   exports: [],
 })

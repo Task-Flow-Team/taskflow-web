@@ -2,6 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import {RegisterService} from "@/src/presentation/pages/auth/register/register.service";
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,10 @@ export class RegisterComponent {
   isTransitioning = false;
   selectedImage: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private registerService: RegisterService
+  ) {
     this.registerForm = this.fb.group({
       // Step 1
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -60,7 +64,7 @@ export class RegisterComponent {
       return new Promise<void>(async (resolve) => {
         await (document as any).startViewTransition(async () => {
           const currentContent = document.querySelector('.step-content');
-          
+
           if (currentContent) {
             currentContent.classList.add('fade-out');
             await new Promise((r) => setTimeout(r, 200));
@@ -76,7 +80,7 @@ export class RegisterComponent {
             newContent.classList.remove('fade-out');
           }
           console.log(`one seconds later currentStep: ${this.currentStep}`);
-          
+
           // Resolvemos la promesa después de que todo esté completo
           resolve();
         });
@@ -110,10 +114,12 @@ export class RegisterComponent {
   }
 
   async skipStep(): Promise<void> {
+    // Si quieres que salte la imagen pero de todos modos haga el submit:
     if (this.currentStep === 3 && this.currentStep < this.totalSteps) {
-      await this.changeStep(this.currentStep + 1);
+      await this.onSubmit(); // Realiza el registro
     }
   }
+
   isCurrentStepValid(): boolean {
     switch (this.currentStep) {
       case 1:
@@ -149,15 +155,33 @@ export class RegisterComponent {
   async onSubmit(): Promise<void> {
     if (this.registerForm.valid) {
       this.loading = true;
-      try {
-        // Aquí iría la lógica de registro
-        await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulación
-        this.currentStep++;
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.loading = false;
-      }
+
+      const {username, email, password} = this.registerForm.value;
+
+      const registerData = {
+        username,
+        email,
+        password,
+      };
+
+      this.registerService.register(registerData).subscribe({
+        next: (response) => {
+          console.log('Registro exitoso:', response);
+
+          // Guardar el access_token en localStorage
+          const {access_token} = response;
+          localStorage.setItem('access_token', access_token);
+
+          // Redirigir al dashboard
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error('Error en el registro:', error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
     }
   }
 
