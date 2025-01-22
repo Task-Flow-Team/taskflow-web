@@ -18,7 +18,7 @@ export interface AccessToken {
   providedIn: 'root',
 })
 export class RegisterService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://https://taskflow-api-lyjt.onrender.com/';
   constructor(private http: HttpClient) {}
   register(data: RegisterRequest): Observable<AccessToken> {
     return this.http.post<AccessToken>(`${this.apiUrl}/v1/auth/register`, data);

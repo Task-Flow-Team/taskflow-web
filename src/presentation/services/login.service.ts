@@ -10,7 +10,7 @@ export interface AccessToken {
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://https://taskflow-api-lyjt.onrender.com/';
   constructor(private http: HttpClient) {}
   login(email: string, password: string): Observable<AccessToken> {
     return this.http.post<AccessToken>(`${this.apiUrl}/v1/auth/login`, {

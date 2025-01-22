@@ -15,7 +15,7 @@ interface UserProfile {
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/v1/users/profile/me';
+  private apiUrl = 'https://taskflow-api-lyjt.onrender.com//v1/users/profile/me';
 
   constructor(private http: HttpClient) {}
 
