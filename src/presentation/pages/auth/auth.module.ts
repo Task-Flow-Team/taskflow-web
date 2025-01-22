@@ -9,8 +9,8 @@ import { SocialButtonsComponent } from '@/src/shared/components/ui';
 import { DividerComponent } from "@/src/shared/components/layout/";
 import { RememberCheckboxComponent } from "@/src/shared/components/form";
 import {HttpClientModule} from "@angular/common/http";
-import {LoginService} from "@/src/presentation/pages/auth/login/login.service";
-import {RegisterService} from "@/src/presentation/pages/auth/register/register.service";
+import {LoginService} from "@/src/presentation/services/login.service";
+import {RegisterService} from "@/src/presentation/services/register.service";
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import {RegisterService} from "@/src/presentation/pages/auth/register/register.s
   ],
   providers: [
     LoginService,
-    RegisterService
+    RegisterService,
   ],
   imports: [
     CommonModule,

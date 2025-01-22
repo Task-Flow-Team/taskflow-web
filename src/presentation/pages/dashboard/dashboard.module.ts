@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard.component';
 import {
   NavbarComponent,
   SidebarComponent,
-} from '../../layouts/dashboard_layout';
+} from '../index';
 import { LanguageSelectorComponent } from '@/src/shared/components/ui/languageSelector/languageSelector.component';
 import { NotificationsToggleComponent } from '@/src/shared/components/ui/notificationsMenu/notificationsMenu.component';
 import { SearchBarComponent } from '@/src/shared/components/ui/searchBar/searchBar.component';
@@ -22,20 +22,14 @@ import {
   heroClipboardDocumentCheck,
 } from '@ng-icons/heroicons/outline';
 
-const heroIcons = {
-  heroBell,
-  heroMegaphone,
-  heroBars3CenterLeft,
-  heroLanguage,
-  heroClipboardDocumentCheck,
-};
-
 import {
   bootstrapHouse,
   bootstrapCollection,
   bootstrapCalendar4Week,
   bootstrapBarChartLine,
 } from '@ng-icons/bootstrap-icons';
+import {HttpClientModule} from "@angular/common/http";
+import {UserService} from "@/src/presentation/services/user.service";
 
 const bootstrapIcons = {
   bootstrapHouse,
@@ -44,8 +38,19 @@ const bootstrapIcons = {
   bootstrapBarChartLine,
 };
 
+const heroIcons = {
+  heroBell,
+  heroMegaphone,
+  heroBars3CenterLeft,
+  heroLanguage,
+  heroClipboardDocumentCheck,
+};
+
 @NgModule({
   declarations: [DashboardComponent, SidebarComponent, NavbarComponent],
+  providers:[
+    UserService
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -56,6 +61,7 @@ const bootstrapIcons = {
     NotificationsToggleComponent,
     UserMenuComponent,
     ModalComponent,
+    HttpClientModule,
     NgIconsModule.withIcons({
       ...heroIcons,
       ...bootstrapIcons,
