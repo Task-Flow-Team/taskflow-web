@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@/src/enviroments/enviroment';
 
 interface UserProfile {
   username: string;
@@ -15,8 +16,7 @@ interface UserProfile {
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://taskflow-api-lyjt.onrender.com//v1/users/profile/me';
-
+  private apiUrl = `${environment.apiUrl}/v1/users/profile/me`;
   constructor(private http: HttpClient) {}
 
   getUserProfile(): Observable<UserProfile> {

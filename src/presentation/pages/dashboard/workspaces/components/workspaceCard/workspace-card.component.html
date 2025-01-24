@@ -1,0 +1,79 @@
+<div 
+  (click)="navigateToWorkspace()"
+  class="group relative bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all cursor-pointer">
+  
+  <!-- Workspace Icon/Color -->
+  <div 
+    [style.backgroundColor]="workspace.color || '#E5E7EB'"
+    class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center">
+    @if (workspace.icon) {
+      <img [src]="workspace.icon" alt="workspace icon" class="w-6 h-6">
+    } @else {
+      <ng-icon 
+        name="heroFolderOpen" 
+        class="w-6 h-6 text-white">
+      </ng-icon>
+    }
+  </div>
+
+  <!-- Workspace Info -->
+  <h3 class="text-lg font-semibold text-gray-900 mb-1">
+    {{ workspace.name }}
+  </h3>
+  
+  @if (workspace.description) {
+    <p class="text-sm text-gray-500 mb-4 line-clamp-2">
+      {{ workspace.description }}
+    </p>
+  }
+
+  <!-- Members Count -->
+  <div class="flex items-center text-sm text-gray-500">
+    <ng-icon 
+      name="heroUsers" 
+      class="w-4 h-4 mr-1">
+    </ng-icon>
+    {{ workspace.members.length }} members
+  </div>
+
+  <!-- Custom Dropdown Menu -->
+  <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+    <button 
+      (click)="toggleMenu($event)"
+      class="p-1 hover:bg-gray-100 rounded-full transition-colors">
+      <ng-icon 
+        name="heroEllipsisVertical" 
+        class="w-5 h-5 text-gray-500">
+      </ng-icon>
+    </button>
+
+    <!-- Dropdown Menu -->
+    @if (isMenuOpen) {
+      <div 
+        class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="workspace-menu">
+        <div class="py-1" role="none">
+          <!-- Edit option -->
+          <button
+            (click)="editWorkspace($event)"
+            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+            role="menuitem">
+            <ng-icon name="heroEdit" class="w-4 h-4"></ng-icon>
+            Edit
+          </button>
+          
+          <!-- Delete option -->
+          <button
+            (click)="deleteWorkspace($event)"
+            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+            role="menuitem">
+            <ng-icon name="heroTrash" class="w-4 h-4"></ng-icon>
+            Delete
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

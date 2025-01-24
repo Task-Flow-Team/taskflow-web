@@ -1,0 +1,30 @@
+:host {
+    display: block;
+    position: relative;
+  }
+  
+  .workspace-card {
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  
+  // Animación para el menú dropdown
+  .dropdown-menu {
+    animation: scaleIn 0.2s ease-out;
+    transform-origin: top right;
+  }
+  
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }

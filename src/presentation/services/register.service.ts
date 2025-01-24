@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '@/src/enviroments/enviroment';
 
 export interface RegisterRequest {
   username: string;
@@ -18,7 +19,7 @@ export interface AccessToken {
   providedIn: 'root',
 })
 export class RegisterService {
-  private apiUrl = 'http://https://taskflow-api-lyjt.onrender.com/';
+  private apiUrl = `${environment.apiUrl}`;
   constructor(private http: HttpClient) {}
   register(data: RegisterRequest): Observable<AccessToken> {
     return this.http.post<AccessToken>(`${this.apiUrl}/v1/auth/register`, data);
